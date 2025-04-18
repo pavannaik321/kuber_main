@@ -15,7 +15,7 @@ export default function OurStorySection() {
 
           <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
             Your Vision Our Expertise Your Success Get Noticed Generate <br />
-            <span className="text-red-500">Success SkyRocket.</span>
+            <span className="text-blue-500">Success SkyRocket.</span>
           </h2>
 
           {/* Blog cards */}
@@ -47,8 +47,16 @@ export default function OurStorySection() {
         <div>
           {/* Image */}
           <div className="rounded-xl overflow-hidden mb-6">
-            <img src="/aboutus/chairman.jpg" alt="team" className="w-full h-auto object-cover" />
-          </div>
+  <video
+    src="/aboutus/himalayacollege.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full h-auto object-cover"
+  />
+</div>
+
 
           {/* Paragraph */}
           <p className="text-gray-300 mb-8">
@@ -86,7 +94,7 @@ export default function OurStorySection() {
 
 
             </div>
-            <button className="flex items-center gap-2 border border-red-500 text-red-500 px-4 py-2 rounded-full hover:bg-red-600 hover:text-white transition">
+            <button className="flex items-center gap-2 border border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
               <Play size={18} />
               WATCH INTRO
             </button>

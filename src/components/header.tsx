@@ -19,7 +19,8 @@ export default function Header() {
   return (
     <header className="w-full z-50">
       {/* Main Navigation */}
-      <nav className="bg-black flex justify-between items-center px-6 sm:px-20 py-4 shadow-md relative">
+      <nav className="bg-[linear-gradient(to_right,_rgb(255,255,255,0),_rgb(255,255,255,0.2),_rgb(0,0,0,1),_rgb(0,0,0,1))] flex justify-between items-center px-6 sm:px-20 py-4 shadow-md relative">
+
         {/* Logo & School Name */}
         <div className="flex items-center space-x-3">
           <img src="/school_logo1.png" alt="School Logo" className="h-10" />
