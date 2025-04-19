@@ -1,115 +1,144 @@
 "use client";
+import React, { useState } from "react";
+import { FaDownload, FaBars, FaTimes } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-import {  useState } from "react";
-
-import {  FaFacebookF, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
-import Link from "next/link";
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false); // Controls both mobile and desktop dropdown
 
-
-
-
-
-  const toggleDropdown = (menu: string) => {
-    setDropdownOpen(dropdownOpen === menu ? "" : menu);
-  };
+  const navLinks = [
+    "Home",
+    "About",
+    "Entities",
+    "Gallery",
+    "Events",
+    "Schemes",
+    "Carrers",
+  ];
 
   return (
-    <header className="w-full z-50">
-      {/* Main Navigation */}
-      <nav className="bg-[linear-gradient(to_right,_rgb(255,255,255,0),_rgb(255,255,255,0.2),_rgb(0,0,0,1),_rgb(0,0,0,1))] flex justify-between items-center px-6 sm:px-20 py-4 shadow-md relative">
+    <header className="w-full shadow-md bg-white z-50 sticky top-0">
+      {/* Logo */}
+      <div className="max-w-7xl mx-auto px-4 flex justify-center items-center space-x-2 py-2">
+        <img src="/school_logo1.png" alt="Logo" className="h-12 w-30" />
+      </div>
+      <div className="max-w-7xl mx-auto px-4 pb-4 flex items-center justify-between">
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex space-x-6 font-semibold text-sm text-black relative">
+          {navLinks.map((link) => {
+            if (link === "About") {
+              return (
+                <div className="relative" key={link}>
+                  <div
+                    className="cursor-pointer flex items-center gap-1"
+                    onClick={() => setAboutOpen((prev) => !prev)}
+                  >
+                    <span>ABOUT </span>
+                    {aboutOpen ? (
+                      <FaChevronUp className="text-xs" />
+                    ) : (
+                      <FaChevronDown className="text-xs" />
+                    )}
+                  </div>
 
-        {/* Logo & School Name */}
-        <div className="flex items-center space-x-3">
-          <img src="/school_logo1.png" alt="School Logo" className="h-10" />
-          {/* <span className="text-lg font-bold text-green-900">DELHI WORLD SCHOOL</span> */}
-        </div>
+                  {aboutOpen && (
+                    <div className="absolute top-full mt-2 bg-white shadow-md py-2 rounded-md w-48 text-left z-30">
+                      <a
+                        href="/about/history"
+                        className="block px-4 py-2 hover:bg-gray-100 text-gray-700"
+                      >
+                        History
+                      </a>
+                      <a
+                        href="/about/chairman"
+                        className="block px-4 py-2 hover:bg-gray-100 text-gray-700"
+                      >
+                        Chairman Corner
+                      </a>
+                      <a
+                        href="/about/vision-mission"
+                        className="block px-4 py-2 hover:bg-gray-100 text-gray-700"
+                      >
+                        Vision & Mission
+                      </a>
+                    </div>
+                  )}
+                </div>
+              );
+            }
 
-        {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-6 text-white font-medium relative z-50">
-          <li>
-            <Link href="/" className="">Home</Link>
-          </li>
+            return (
+              <a
+                href={`/${link.toLowerCase().replace(/\s/g, "-")}`}
+                key={link}
+              >
+                {link.toUpperCase()}
+              </a>
+            );
+          })}
+        </nav>
 
-          {/* About Us */}
-          <li className="relative group">
-            <Link href="#" className="text-white flex items-center px-3 rounded-md">
-              About Us <FaChevronDown className="ml-1 text-sm" />
-            </Link>
-            <ul className="absolute left-0 bg-white shadow-lg rounded-md hidden group-hover:block py-2 w-48">
-              <li>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100">
-                History
-                </Link>
-              </li>
-              <li><Link href="#" className="block px-4 py-2 hover:bg-gray-100">Chairman corner</Link></li>
-              <li><Link href="#" className="block px-4 py-2 hover:bg-gray-100">Vission & Misssion</Link></li>
-            </ul>
-          </li>
-
-
-
-
-
-          <li><Link href="#" className="">Entities</Link></li>
-          <li><Link href="#" className="">Gallery</Link></li>
-          <li><Link href="#" className="">Events</Link></li>
-          <li><Link href="#" className="">Schemes</Link></li>
-          <li><Link href="#" className="">Carrers</Link></li>
-        </ul>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-gray-800 text-2xl focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle navigation"
-        >
-          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        {/* Download Button */}
+        <button className="hidden lg:flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-semibold transition">
+          <FaDownload className="mr-2" />
+          Download
         </button>
-      </nav>
 
-      {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-  <div className="md:hidden bg-white text-gray-800 py-4 px-6 space-y-4 shadow-md relative z-50">
-    <Link href="/" className="block py-2 hover:text-green-600">Home</Link>
+        {/* Hamburger Icon */}
+        <button
+          className="lg:hidden text-gray-800 text-2xl"
+          onClick={() => {
+            setMenuOpen(!menuOpen);
+            setAboutOpen(false); // close about menu on main toggle
+          }}
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
 
-    {/* About Us */}
-    <div>
-      <button
-        onClick={() => toggleDropdown("about")}
-        className="w-full text-left flex justify-between items-center py-2 hover:text-green-600"
-      >
-        About Us <FaChevronDown className={`ml-1 transition-transform ${dropdownOpen === "about" ? "rotate-180" : ""}`} />
-      </button>
-      {dropdownOpen === "about" && (
-        <div className="pl-4 space-y-2">
-          <Link href="#" className="block py-1 hover:text-green-600">History</Link>
-          <Link href="#" className="block py-1 hover:text-green-600">Chairman corner</Link>
-          <Link href="#" className="block py-1 hover:text-green-600">Vision & Mission</Link>
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="lg:hidden bg-white px-4 pb-6 space-y-4 text-sm font-medium text-black">
+          {navLinks.map((link) => {
+            if (link === "About") {
+              return (
+                <div key={link}>
+                  <div
+                    className="cursor-pointer flex justify-between items-center"
+                    onClick={() => setAboutOpen(!aboutOpen)}
+                  >
+                    <span>About</span>
+                    {aboutOpen ? <FaChevronUp /> : <FaChevronDown />}
+                  </div>
+                  {aboutOpen && (
+                    <div className="ml-4 mt-2 space-y-2">
+                      <a href="/about/history">• History</a>
+                      <a href="/about/chairman">• Chairman Corner</a>
+                      <a href="/about/vision-mission">• Vision & Mission</a>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            return (
+              <a
+                key={link}
+                href={`/${link.toLowerCase().replace(/\s/g, "-")}`}
+                className="block"
+              >
+                {link}
+              </a>
+            );
+          })}
+
+          {/* Download button */}
+          <button className="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-semibold transition w-max mt-4">
+            <FaDownload className="mr-2" />
+            Download
+          </button>
         </div>
       )}
-    </div>
-
-   
-    <Link href="#" className="block py-2 hover:text-green-600">Entities</Link>
-    <Link href="#" className="block py-2 hover:text-green-600">Gallery</Link>
-    <Link href="#" className="block py-2 hover:text-green-600">Events</Link>
-    <Link href="#" className="block py-2 hover:text-green-600">Schemes</Link>
-    <Link href="#" className="block py-2 hover:text-green-600">Carrers</Link>
-
-    {/* Social Icons */}
-    <div className="flex justify-center space-x-3 pt-4">
-      <FaFacebookF className="text-blue-500 cursor-pointer" />
-      <FaInstagram className="text-red-500 cursor-pointer" />
-      <FaTwitter className="text-yellow-400 cursor-pointer" />
-      <FaLinkedin className="text-green-500 cursor-pointer" />
-      <FaYoutube className="text-orange-500 cursor-pointer" />
-    </div>
-  </div>
-)}
-
     </header>
   );
 }
